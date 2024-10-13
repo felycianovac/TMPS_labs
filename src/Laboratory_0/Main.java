@@ -1,10 +1,12 @@
-import Compression.FileCompression;
-import Encryption.FileEncryption;
-import Managers.AdvancedFileManager;
-import Managers.FileManager;
-import Storage.CloudStorage;
-import Storage.FileStorage;
-import Storage.LocalStorage;
+package Laboratory_0;
+
+import Laboratory_0.Compression.FileCompression;
+import Laboratory_0.Encryption.FileEncryption;
+import Laboratory_0.Managers.AdvancedFileManager;
+import Laboratory_0.Managers.FileManager;
+import Laboratory_0.Storage.CloudStorage;
+import Laboratory_0.Storage.FileStorage;
+import Laboratory_0.Storage.LocalStorage;
 
 public class Main {
     public static void main(String[] args) {
