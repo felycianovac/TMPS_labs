@@ -1,4 +1,6 @@
-public class CloudStorage implements FileStorage{
+package Storage;
+
+public class CloudStorage implements FileStorage {
     /**
      * Single Responsibility Principle
      **/
@@ -10,5 +12,10 @@ public class CloudStorage implements FileStorage{
         @Override
         public void deleteFile(String fileName) {
             System.out.println("Deleting file " + fileName + " from cloud storage");
+        }
+
+        @Override
+        public String retrieveFile(String fileName) {
+            return "Retrieving file " + fileName + " from cloud storage";
         }
 }

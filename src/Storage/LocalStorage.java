@@ -1,7 +1,8 @@
-public class LocalStorage implements FileStorage{
-    /**
-     * Single Responsibility Principle
-     **/
+package Storage;
+
+import Storage.FileStorage;
+
+public class LocalStorage implements FileStorage {
 
         @Override
         public void storeFile(String fileName) {
@@ -11,5 +12,9 @@ public class LocalStorage implements FileStorage{
         @Override
         public void deleteFile(String fileName) {
             System.out.println("Deleting file " + fileName + " from local storage");
+        }
+        @Override
+        public String retrieveFile(String fileName) {
+            return "Retrieving file " + fileName + " from local storage";
         }
 }

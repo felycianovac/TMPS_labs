@@ -1,12 +1,11 @@
+package Managers;
+
+import Storage.FileStorage;
+
 public class FileManager {
 
         private FileStorage fileStorage;
-        /**
-         * Dependency Inversion Principle
-         * The high-level module (FileManager) depends on the FileStorage abstraction (interface) rather than specific implementations like LocalStorage or CloudStorage.
-         * Liskov Substitution Principle
-         * The FileManager class can work with any class that implements the FileStorage interface.
-        **/
+
         public FileManager(FileStorage fileStorage) {
             this.fileStorage = fileStorage;
         }
@@ -17,5 +16,9 @@ public class FileManager {
 
         public void removeFile(String fileName) {
             fileStorage.deleteFile(fileName);
+        }
+
+        public String retrieveFile(String fileName) {
+            return fileStorage.retrieveFile(fileName);
         }
 }
