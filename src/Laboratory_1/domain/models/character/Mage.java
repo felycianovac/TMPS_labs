@@ -1,9 +1,9 @@
 package Laboratory_1.domain.models.character;
 
-import Laboratory_1.domain.models.CloneableCharacter;
+import Laboratory_1.domain.prototype.CloneableCharacter;
 import Laboratory_1.domain.models.weapon.Weapon;
 
-public class Mage implements Character {
+public class Mage implements Character, CloneableCharacter{
     private Weapon weapon;
 
     @Override
@@ -30,6 +30,17 @@ public class Mage implements Character {
         this.weapon = weapon;
         System.out.println("Mage equips a new magical weapon.");
     }
+
+        @Override
+        public CloneableCharacter clone() {
+            try {
+                Mage clonedMage = (Mage) super.clone();
+                return clonedMage;
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
 
 

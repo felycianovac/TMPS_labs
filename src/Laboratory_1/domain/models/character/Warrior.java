@@ -1,8 +1,9 @@
 package Laboratory_1.domain.models.character;
 
+import Laboratory_1.domain.prototype.CloneableCharacter;
 import Laboratory_1.domain.models.weapon.Weapon;
 
-public class Warrior implements Character {
+public class Warrior implements Character, CloneableCharacter {
     private Weapon weapon;
 
     @Override
@@ -28,6 +29,17 @@ public class Warrior implements Character {
     public void equipWeapon(Weapon weapon) {
         this.weapon = weapon;
         System.out.println("Warrior equips a new weapon.");
+    }
+
+    @Override
+    public CloneableCharacter clone() {
+        try {
+            Warrior clonedWarrior = (Warrior) super.clone();
+            return clonedWarrior;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 

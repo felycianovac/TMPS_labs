@@ -1,7 +1,11 @@
 package Laboratory_1.client;
 
+import Laboratory_1.app.GameMenu;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, world!");
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.start();
     }
+
 }
