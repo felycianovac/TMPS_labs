@@ -6,4 +6,6 @@ public interface Weapon {
     void reduceDurability(int amount);
     void repair();
     int getDurability();
+    String getName();
+
 }

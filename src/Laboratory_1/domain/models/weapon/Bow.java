@@ -39,4 +39,9 @@ public class Bow implements Weapon{
     public int getDurability() {
         return durability;
     }
+
+    @Override
+    public String getName() {
+        return "Bow";
+    }
 }

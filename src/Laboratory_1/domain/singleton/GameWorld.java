@@ -28,6 +28,11 @@ public class GameWorld {
         return this.name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 
     public void displaySettings() {
         System.out.println("World: " + name + ", Difficulty Level: " + level);
