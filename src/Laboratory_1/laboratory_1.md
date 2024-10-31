@@ -13,73 +13,49 @@
 
 
 ## Theory:
-In software engineering, **creational design patterns** are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or in added complexity to the design due to inflexibility in the creation procedures. Creational design patterns solve this problem by somehow controlling this object creation. [1]
+In software engineering, **creational design patterns** are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or in added complexity to the design due to inflexibility in the creation procedures. Creational design patterns solve this problem by somehow controlling this object creation. **[1]**
 
-### Singleton Pattern
+### Singleton, Abstract Factory & Prototype Patterns
 
-The **Singleton pattern** ensures that a class has only one instance and provides a global point of access to this instance. This is especially useful for classes that manage shared resources or configurations, where multiple instances would cause conflicts or unnecessary resource usage.
+Let's first focus on the **Singleton**, **Abstract Factory** and **Prototype** patterns, such that these three were implemented within my project.
 
+The **Singleton** pattern, in simple words, ensures that there’s only one instance of a class and provides a global way to access it. This is useful for shared resources or configurations that need to stay consistent. You can see how this works in Table 1's first column, where the Singleton's UML Diagram is presented, and it shows that the `getInstance()` method creates and returns a single shared instance to be used by the `Client`.
+
+The **Abstract Factory** pattern on the other hand, provides an interface for creating families of related objects without needing to know their exact classes. This is useful in situations where an application needs to work with different sets of related objects but doesn’t need to know the specifics. It's core logic can also be seen in Table 1, second column, where the UML diagram for Abstract Factory is presented. Here, the `AbstractFactory` defines methods to create related products. Each `ConcreteFactory` produces specific product families, allowing the `Client` to create these products without knowing their exact types, making it easy to switch between product families.
+
+The third one, **Prototype** pattern allows objects to be created by copying an existing instance, called a prototype. So, instead of creating new instances from scratch, we can simply create a prototype. It's structure is also presented in Table 1's third column, which shows how the Client uses a Prototype interface to clone ConcretePrototypes, creating duplicates without knowing their exact type.
+
+
+Singleton                  |Abstract Factory                 |Prototype           |
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/singleton.png)  |  ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/abstractfactory.png) | ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/prototype.png)  | 
 <p align="center">
-  <img src="/src/Laboratory_1/images/singleton.png" alt="Singleton Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 1. Singleton Pattern Structure</em>
+  <strong>Table 1.</strong> Singleton, Abstract Factory & Prototype's UML diagrams
 </p>
 
-### Builder Pattern
+### Builder, Object Pooling & Factory Method patterns
 
-The **Builder pattern** separates the construction of a complex object from its representation, allowing the same construction process to create different representations. It is ideal for creating objects with multiple optional parts or configurations.
+I'll be focusing less on **Builder**, **Object Pooling** and **Factory Method** patterns, but still let's traverse them.
 
+The **Builder** pattern constructs complex objects step-by-step, useful when an object requires multiple configurations. Look at the Table 2's first column, there, the `Director` coordinates the `Builder` in creating a `Product`, where each `ConcreteBuilder` completes specific parts, allowing for flexibility in object configurations.
+
+The **Object** Pooling pattern reuses objects from a pool instead of creating new ones, improving performance when instantiating objects is costly. In the Table 2's third column, the `Client` accesses the `ObjectPool` to get instances from `ReusablePool`, supporting efficient memory and resource management by reusing objects instead of recreating them.
+
+The **Factory Method** pattern provides an interface to create objects, allowing subclasses to decide the exact type, enhancing flexibility in object creation. Have also a look at the Table 2's second column, in the diagram, `Creator` provides a factoryMethod, and `ConcreteCreator` uses it to produce instances of `ConcreteProduct`, aligning with our explanation on flexible and dynamic object creation.
+
+
+| Builder                  | Factory Method                 | Object Pooling           |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+| ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/builder.png)  |  ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/factorymethod.webp) | <img src="https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/pooling.jpg" width="400"/> |
 <p align="center">
-  <img src="/src/Laboratory_1/images/builder.png" alt="Builder Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 2. Builder Pattern Structure</em>
+  <strong>Table 2.</strong> Builder, Object Pooling & Factory Method's UML diagrams
 </p>
 
-### Prototype Pattern
-
-The **Prototype pattern** is used to create new objects by copying an existing object (the prototype), rather than creating an entirely new instance. This is efficient when the setup cost of an object is high or when similar objects need to be duplicated frequently.
-
-
-<p align="center">
-  <img src="/src/Laboratory_1/images/prototype.png" alt="Prototype Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 3. Prototype Pattern Structure</em>
-</p>
-
-### Object Pooling Pattern
-
-The Object Pooling pattern manages a pool of reusable objects, particularly useful when creating new instances is expensive or when there is a limited set of resources that need to be reused.
-
-<p align="center">
-  <img src="/src/Laboratory_1/images/pooling.jpg" alt="Object Pooling Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 4. Object Pooling Pattern Structure</em>
-</p>
-
-### Factory Method
-
-The **Factory Method** pattern provides an interface for creating objects, allowing subclasses to alter the type of object that will be created. Instead of instantiating objects directly, the Factory Method pattern defers instantiation to subclasses, which then decide which specific class to instantiate. This makes it easier to extend and customize object creation in subclasses.
-
-<p align="center">
-  <img src="/src/Laboratory_1/images/factorymethod.webp" alt="Factory Method Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 5. Factory Method Pattern Structure</em>
-</p>
-
-### Abstract Factory
-
-The **Abstract Factory** pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes. This pattern is useful when a system needs to work with multiple families of related objects but does not need to know the specifics of those objects. By working with interfaces or abstract classes, it’s easier to switch between families of products or extend the application to support new families.
-
-<p align="center">
-  <img src="/src/Laboratory_1/images/abstractfactory.png" alt="Abstract Factory Pattern Structure" width="400"/>
-  <br>
-  <em>Figure 6. Abstract Factory Pattern Structure</em>
-</p>
 
 ## Domain of the application
-I chose the domain of game development because it directly aligns with my area of expertise, where I frequently apply creational design patterns. In games, object creation is complex, with various entities like characters, weapons, and environments needing tailored configurations. Patterns such as Singleton, Factory Method, Abstract Factory, and Prototype efficiently manage these needs—controlling instantiation, ensuring consistency, and optimizing performance when duplicating objects. Simulating these patterns in Java, this project reflects how they support scalable and maintainable object creation in game development.
+I chose game area for this project because it aligns with my job and is an area where creational design patterns are especially useful in my opinion. In games, creating objects like characters, weapons, and environments requires specific configurations and often complex setups. Patterns like Singleton, Abstract Factory, and Prototype help manage this complexity by controlling object creation, maintaining consistency, and improving performance when duplicating objects. I haven't really created a game, but at least I tried to simulate it's logic "behind the scenes" in Java, to show their applicability.
 
-Overall, the application is a **Game Asset Management System** designed to demonstrate creational design patterns in game development. Its functionalities include:
+Overall, the project is a **Game Asset Management System** designed to demonstrate creational design patterns in game development. Its functionalities include:
 
 - Create and Manage Characters
 - Equip Characters with Weapons
@@ -87,13 +63,11 @@ Overall, the application is a **Game Asset Management System** designed to demon
 - Track Global Game Settings
 - Display and Update Game World
 
-
-
 ## Used Patterns: 
 
 ### 1. Singleton Pattern
 
-In this project, the `GameWorld` class is implemented as a singleton to manage global game settings, such as the difficulty level, ensuring consistent access across the application.
+In this project, the `GameWorld` class is implemented as a singleton to manage global game settings, such as the difficulty level and the game world's name, ensuring consistent access across the application.
 
 ```java
 public class GameWorld {
@@ -135,26 +109,18 @@ public class GameWorld {
 ```
 ### 2. Abstract Factory Pattern
 
+The **Abstract Factory** pattern is used in this project to create families of related objects—specifically, characters and their corresponding weapons. This pattern is ideal here because it allows me to create various types of characters (e.g., warriors, mages, archers) along with the correct type of weapon for each character. It also means I can switch character types or add new ones without needing to change the core game code that works with these objects.
 
-The **Abstract Factory** pattern is used in this project to create families of related objects—specifically, characters and their corresponding weapons. This pattern is ideal here because it allows us to create various types of characters (e.g., warriors, mages, archers) along with the correct type of weapon for each character. Using this approach, the game can easily switch between character types without changing the underlying code that interacts with these objects.
-
-**Structure in the Project:**
-* **Abstract Factory Interface (`CharacterWeaponFactory`)** defines methods for creating a `Character` and a `Weapon`.
-* **Concrete Factories**-each concrete factory (e.g., `WarriorFactory`, `MageFactory`, `ArcherFactory`) implements the `CharacterWeaponFactory` interface to create specific character and weapon types.
-* **Abstract Products (`Character` and `Weapon`)** define the behavior expected from any character or weapon.
-* **Concrete Products**-specific implementations of characters and weapons, such as `Warrior`, `Mage`, `Sword`, and `Staff`.
+Especially, the Abstract Factory Interface `CharacterWeaponFactory` defines methods for creating both a Character and a Weapon. Each Concrete Factory, such as `WarriorFactory`, `MageFactory`, and `ArcherFactory` implements this interface to create specific types of characters and their respective weapons. The Abstract Products `Character` and `Weapon` set the expected behaviors for any character or weapon. Finally, the Concrete Products include specific implementations like `Warrior`, `Mage`, `Sword`, and `Staff`, providing the actual character and weapon types used in the game.
 
 ### 3. Prototype Pattern:
 
-The **Prototype** pattern is used in this project to create clones of existing characters. This pattern is particularly useful in game development when we need to duplicate complex objects (like characters) with predefined attributes without going through the entire initialization process again. By cloning an object, we can quickly create new instances that retain the original object’s configuration, which is both time-efficient and memory-efficient.
+I've used the **Prototype** in this "game" to create clones of existing characters. I find this pattern really handy in game development when I need to duplicate complex objects, like characters, with all their predefined attributes. Instead of reinitializing everything from scratch, I can simply clone an object to quickly create a new instance that keeps the original’s settings, saving both time and memory.
 
-**Structure in the Project:**
-* **Prototype Interface (`CloneableCharacter`)** defines the `clone()` method for cloning characters. It extends the `Character` interface, so cloned characters can still interact with other game components as any other character would.
-* **Concrete Prototypes**-classes like `Mage`, `Warrior`, and `Archer` implement `CloneableCharacter` and provide cloning capabilities.
-* **Cloning Process**-using the `clone()` method, we can easily create duplicates of an existing character while retaining the initial settings, making it easy to produce similar characters with minimal overhead.
+Specifically, the Prototype Interface `CloneableCharacter` defines the `clone()` method used for cloning characters. It extends the `Character` interface, allowing cloned characters to interact with other game components just like any other character. Concrete Prototypes, such as `Mage`, `Warrior`, and `Archer`, implement `CloneableCharacter` and offer cloning capabilities. Through the Cloning Process with the `clone()` method, we can quickly create duplicates of an existing character, keeping the initial settings intact and allowing for efficient creation of similar characters with minimal overhead.
 
 ## Implementation
-This project is organized into specific packages that follow the structure of the creational design patterns used:
+I've organized this project into directories according to the creational design patterns used:
 
 ```
 Laboratory_1/
@@ -244,41 +210,25 @@ public interface CloneableCharacter extends Character, Cloneable{
 
 ## Results
 
-Figure 7 illustrates the character creation process. The user selects the Warrior class and names the character "Ludus." After the character is created, "Ludus" is introduced as a warrior with the corresponding weapon, "Sword" indicating successful instantiation and weapon assignment.
+The table below summarizes key interactions in the game:
 
+| Character Creation                  | Tool Usage                | Cloning           |Changing Game Setting          |
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+| ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/create.png)  |  ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/usetool.png) | ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/clone.png) | ![](https://github.com/felycianovac/TMPS_labs/blob/main/src/Laboratory_1/images/modifysettings.png) |
 <p align="center">
-  <img src="/src/Laboratory_1/images/create.png" alt="Character Creation with its Respective Tool" width="400"/>
-  <br>
-  <em>Figure 7. Character Creation with its Respective Tool</em>
+  <strong>Table 3.</strong> Results
 </p>
 
-The next figure captures the interaction for managing a character's weapon. The user selects the Warrior's weapon and performs a special attack, reducing the weapon's durability. The messages confirm the special attack action and the resulting durability reduction, showcasing weapon management functionality.
+The **Character Creation** column describes the process where I created a character by choosing the Warrior class and naming him "Ludus." The character was successfully introduced as a warrior with the assigned weapon, "Sword," confirming that character creation and weapon assignment were successful.
 
-<p align="center">
-  <img src="/src/Laboratory_1/images/usetool.png" alt="Tool Usage" width="400"/>
-  <br>
-  <em>Figure 8. Tool Usage</em>
-</p>
+In the **Tool Usage** column, I tested weapon functionality by selecting Ludus’s sword and performing a special attack. This action reduced the weapon's durability, with console messages confirming the special attack and showing the updated durability.
 
-Figure 9 demonstrates the functionality of cloning an existing character. The user selects the option to clone, chooses "Ludus" from the available characters, and successfully creates a cloned instance. Both the original and cloned characters are displayed when the list is viewed, showing that they share the same name and type.
-<p align="center">
-  <img src="/src/Laboratory_1/images/clone.png" alt="Cloning" width="400"/>
-  <br>
-  <em>Figure 9. Cloning</em>
-</p>
+The **Cloning** column demonstrates the cloning feature. I chose to clone "Ludus," successfully creating a duplicate with the same name and type. Viewing the list displays both the original "Ludus" and his clone, confirming the clone feature works as intended.
 
-Lastly, Figure 10 shows how the user can update the game world's name. By selecting the option to change the name and entering "Lost Village," the game world settings are updated successfully. The new settings are displayed, confirming the name change to "Lost Village" with difficulty level 1.
-<p align="center">
-  <img src="/src/Laboratory_1/images/modifysettings.png" alt="Changing Game Settings" width="400"/>
-  <br>
-  <em>Figure 9. Changing Game Settings</em>
-</p>
+Lastly, the **Changing Game Settings** column captures the game world update process. I selected the option to rename the world to "Lost Village." The new name, along with the difficulty level, was displayed, verifying that the game world settings were successfully updated.
 
 ## Conclusions
 
-This laboratory work successfully demonstrated the use of creational design patterns in a game asset management system, providing a structured and efficient approach to object creation, customization, and duplication. By implementing Singleton, Abstract Factory, and Prototype patterns, the project achieved modularity, scalability, and improved resource management. The interactive console application allowed for real-time character creation, weapon assignment, and game world modifications, enhancing the user experience and illustrating the practical advantages of these design patterns in game development.
+Overall, this laboratory work gave me hands-on experience with using creational design patterns to simplify game development. The Singleton pattern kept my game settings consistent, while the Abstract Factory made creating character-weapon pairs straightforward. The Prototype pattern let me easily clone characters, saving time and resources. Together, these patterns helped me build a scalable and efficient game simulation.
 
-The use of abstract factory simplified the creation of different character-weapon combinations, while the Prototype pattern enabled efficient cloning of characters. Additionally, the Singleton pattern ensured consistent access to global game settings. Overall, this project underscored the importance of creational design patterns in managing complex object hierarchies and creating flexible, extensible systems that align with real-world application needs.
-## References
-
-[1] **Creational pattern** - Accessed October 27, 2024. [https://en.wikipedia.org/wiki/Creational_pattern](https://en.wikipedia.org/wiki/Creational_pattern).
+**[1]** **Creational pattern** - Accessed October 27, 2024. [https://en.wikipedia.org/wiki/Creational_pattern](https://en.wikipedia.org/wiki/Creational_pattern).
