@@ -9,6 +9,6 @@
 **Professors:** Andrei Poștaru, Alexandru Furdui
 
 ## Table of Contents
-- [Lab Assigment 0](src/Laboratory_0/laboratory_0.md)
-- [Lab Assigment 1](src/Laboratory_1/laboratory_1.md)
+- [Laboratory Assignment 0](src/Laboratory_0/laboratory_0.md)
+- [Laboratory Assignment 1](src/Laboratory_1/laboratory_1.md)
 
