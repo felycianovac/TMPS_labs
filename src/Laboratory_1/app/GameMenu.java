@@ -6,6 +6,7 @@ import Laboratory_1.domain.factory.*;
 import Laboratory_1.domain.models.character.Character;
 import Laboratory_1.domain.models.weapon.Weapon;
 import Laboratory_2.command.*;
+import Laboratory_2.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,7 @@ public class GameMenu {
 
         if (character instanceof CloneableCharacter cloneableCharacter) {
             characters.add(cloneableCharacter);
+            gameWorld.addObserver((Observer) cloneableCharacter);
         }
     }
 

@@ -52,7 +52,6 @@ public class Archer implements Character, CloneableCharacter, Observer {
         }
 
         weapon.reduceDurability(5);
-//        System.out.println(weapon.getName() + " durability reduced to " + weapon.getDurability() + ".");
     }
 
     @Override
