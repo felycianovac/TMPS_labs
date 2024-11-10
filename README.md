@@ -11,4 +11,6 @@
 ## Table of Contents
 - [Laboratory Assignment 0](src/Laboratory_0/laboratory_0.md)
 - [Laboratory Assignment 1](src/Laboratory_1/laboratory_1.md)
+- [Laboratory Assignment 2](src/Laboratory_2/laboratory_2.md)
+
 
