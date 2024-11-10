@@ -5,6 +5,7 @@ import Laboratory_1.domain.singleton.GameWorld;
 import Laboratory_1.domain.factory.*;
 import Laboratory_1.domain.models.character.Character;
 import Laboratory_1.domain.models.weapon.Weapon;
+import Laboratory_2.command.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,15 @@ import java.util.Scanner;
 public class GameMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final List<CloneableCharacter> characters = new ArrayList<>();
-    private final GameWorld gameWorld = GameWorld.getInstance(); // Singleton instance
+    private final GameWorld gameWorld = GameWorld.getInstance();
+    private final CommandHistory commandHistory = new CommandHistory();
 
     public void start() {
         System.out.println("Welcome to the RPG Game Console! Customize your characters, manage your game world, and enjoy an interactive experience.");
         while (true) {
             displayMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> createCharacter();
@@ -29,8 +31,10 @@ public class GameMenu {
                 case 4 -> updateGameWorldDifficulty();
                 case 5 -> updateGameWorldName();
                 case 6 -> displayAllCharacters();
-                case 7 -> manageCharacterWeapon();
-                case 8 -> exitGame();
+                case 7 -> manageCharacterActions();
+                case 8 -> undoLastAction();
+                case 9 -> replayAllActions();
+                case 10 -> exitGame();
                 default -> System.out.println("Invalid option. Try again.");
             }
         }
@@ -44,8 +48,10 @@ public class GameMenu {
         System.out.println("4. Update Game World Level");
         System.out.println("5. Update Game World Name");
         System.out.println("6. Display All Characters");
-        System.out.println("7. Manage Character Weapon");
-        System.out.println("8. Exit");
+        System.out.println("7. Manage Character Actions");
+        System.out.println("8. Undo Last Action");
+        System.out.println("9. Replay All Actions");
+        System.out.println("10. Exit");
         System.out.print("Select an option: ");
     }
 
@@ -57,7 +63,7 @@ public class GameMenu {
         System.out.print("Select an option: ");
 
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         CharacterWeaponFactory factory = switch (choice) {
             case 1 -> new WarriorFactory();
@@ -75,25 +81,17 @@ public class GameMenu {
 
         System.out.print("Enter a name for your character: ");
         String name = scanner.nextLine();
-        character.setName(name); // Set the name of the character
+        character.setName(name);
         System.out.println(name + " has joined the adventure!");
+
         Weapon weapon = factory.createWeapon();
-        System.out.println("-----------------------------------");
-
-//        Weapon weapon = factory.createWeapon();
-//        character.equipWeapon(weapon);
-
-        character.introduce();
         character.equipWeapon(weapon);
-
-//        character.attackWithWeapon();
+        character.introduce();
 
         if (character instanceof CloneableCharacter cloneableCharacter) {
             characters.add(cloneableCharacter);
-//            System.out.println("Your character " + name + " has been equipped with a " + weapon.getClass().getSimpleName() + ".");
         }
     }
-
 
     private void cloneCharacter() {
         if (characters.isEmpty()) {
@@ -108,7 +106,7 @@ public class GameMenu {
 
         System.out.print("Select an option: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         if (choice < 1 || choice > characters.size()) {
             System.out.println("Invalid choice.");
@@ -121,7 +119,6 @@ public class GameMenu {
         if (clonedCharacter != null) {
             characters.add(clonedCharacter);
             System.out.println("Successfully cloned " + originalCharacter.getName() + "!");
-//            clonedCharacter.introduce();
         } else {
             System.out.println("Failed to clone character.");
         }
@@ -130,7 +127,7 @@ public class GameMenu {
     private void updateGameWorldDifficulty() {
         System.out.print("Enter new difficulty level (1-10): ");
         int newDifficulty = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         if (newDifficulty < 1 || newDifficulty > 10) {
             System.out.println("Difficulty level must be between 1 and 10. Try again.");
@@ -139,7 +136,6 @@ public class GameMenu {
 
         gameWorld.setLevel(newDifficulty);
         System.out.println("Game world difficulty updated successfully.");
-//        gameWorld.displaySettings();
     }
 
     private void displayAllCharacters() {
@@ -153,6 +149,7 @@ public class GameMenu {
             System.out.println("- " + character.getName() + " the " + character.getClass().getSimpleName());
         }
     }
+
     private void updateGameWorldName() {
         System.out.print("Enter a new name for the game world: ");
         String newName = scanner.nextLine();
@@ -162,21 +159,20 @@ public class GameMenu {
         gameWorld.displaySettings();
     }
 
-
-    private void manageCharacterWeapon() {
+    private void manageCharacterActions() {
         if (characters.isEmpty()) {
-            System.out.println("No characters available to manage weapons. Create a character first.");
+            System.out.println("No characters available to manage actions. Create a character first.");
             return;
         }
 
         System.out.println("\nChoose a Character to Manage:");
         for (int i = 0; i < characters.size(); i++) {
-            System.out.println((i + 1) + ". " + characters.get(i).getClass().getSimpleName());
+            System.out.println((i + 1) + ". " + characters.get(i).getName());
         }
 
-        System.out.print("Select an option: ");
+        System.out.print("Select a character: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         if (choice < 1 || choice > characters.size()) {
             System.out.println("Invalid choice.");
@@ -184,33 +180,73 @@ public class GameMenu {
         }
 
         Character character = characters.get(choice - 1);
-        Weapon weapon = character.getWeapon();
 
-        System.out.println("\nChoose a Weapon Action:");
+        System.out.println("\nChoose an Action:");
         System.out.println("1. Attack");
-        System.out.println("2. Special Attack");
-        System.out.println("3. Reduce Durability");
-        System.out.println("4. Repair Weapon");
-        System.out.print("Select an option: ");
+        System.out.println("2. Defend");
+        System.out.println("3. Use Special Ability");
+        System.out.print("Select an action: ");
         int actionChoice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
+        Command command;
         switch (actionChoice) {
-            case 1 -> weapon.attack();
-            case 2 -> weapon.specialAttack();
-            case 3 -> {
-                System.out.print("Enter amount to reduce durability by: ");
-                int reduction = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                weapon.reduceDurability(reduction);
-//                System.out.println("Weapon durability reduced to " + weapon.getDurability());
+            case 1 -> {
+                System.out.println("Choose a target for the attack:");
+                Character target = selectTarget(character); // Pass the attacker to prevent self-attack
+                if (target == null) return; // Exit if no valid target is selected
+                command = new AttackCommand(character, target);
             }
-            case 4 -> {
-                weapon.repair();
-//                System.out.println("Weapon has been repaired to full durability.");
+            case 2 -> command = new DefendCommand(character);
+            case 3 -> command = new SpecialAbilityCommand(character);
+            default -> {
+                System.out.println("Invalid action. Returning to main menu.");
+                return;
             }
-            default -> System.out.println("Invalid action. Returning to main menu.");
         }
+
+        commandHistory.executeCommand(command);
+    }
+
+
+    private Character selectTarget(Character attacker) {
+        if (characters.size() < 2) {
+            System.out.println("There must be at least two characters to select a target.");
+            return null;
+        }
+
+        System.out.println("\nAvailable Targets:");
+        for (int i = 0; i < characters.size(); i++) {
+            System.out.println((i + 1) + ". " + characters.get(i).getName());
+        }
+
+        Character target = null;
+        while (target == null) {
+            System.out.print("Select a target: ");
+            int targetChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (targetChoice < 1 || targetChoice > characters.size()) {
+                System.out.println("Invalid choice.");
+            } else {
+                target = characters.get(targetChoice - 1);
+                if (target == attacker) {
+                    System.out.println("A character cannot attack themselves. Please select a different target.");
+                    target = null;
+                }
+            }
+        }
+
+        return target;
+    }
+
+
+    private void undoLastAction() {
+        commandHistory.undoLastCommand();
+    }
+
+    private void replayAllActions() {
+        commandHistory.replayCommands();
     }
 
     private void exitGame() {

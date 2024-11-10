@@ -52,7 +52,7 @@ public class Warrior implements Character, CloneableCharacter, Observer {
         }
 
         weapon.reduceDurability(8);
-        System.out.println(weapon.getName() + " durability reduced to " + weapon.getDurability() + ".");
+//        System.out.println(weapon.getName() + " durability reduced to " + weapon.getDurability() + ".");
     }
 
     @Override
