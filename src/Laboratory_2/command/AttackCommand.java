@@ -25,14 +25,16 @@ public class AttackCommand implements Command {
             return;
         }
 
-        int baseDamage = attacker.getWeapon().getDurability();
-        damageDealt = calculateDamage(baseDamage);
+        damageDealt = attacker.attackWithWeapon();
 
-        System.out.println(attacker.getName() + " attacks " + target.getName() + " for " + damageDealt + " damage!");
-        target.attackWithWeapon();
+        if (damageDealt > 0) {
+            System.out.println(attacker.getName() + " attacks " + target.getName() + " for " + damageDealt + " damage!");
+            target.takeDamage(damageDealt);
+        }
 
         applyStatusEffect();
     }
+
 
     @Override
     public void undo() {
@@ -44,26 +46,26 @@ public class AttackCommand implements Command {
         }
     }
 
-    private int calculateDamage(int baseDamage) {
-        Random rand = new Random();
-
-        double critChance = 0.25;
-        criticalHit = rand.nextDouble() < critChance;
-
-        double missChance = 0.1;
-        if (rand.nextDouble() < missChance) {
-            System.out.println(attacker.getName() + "'s attack missed!");
-            return 0;
-        }
-
-        int finalDamage = baseDamage;
-        if (criticalHit) {
-            finalDamage *= 2;
-            System.out.println("Critical Hit! " + attacker.getName() + " deals extra damage.");
-        }
-
-        return finalDamage;
-    }
+//    private int calculateDamage(int baseDamage) {
+//        Random rand = new Random();
+//
+//        double critChance = 0.25;
+//        criticalHit = rand.nextDouble() < critChance;
+//
+//        double missChance = 0.1;
+//        if (rand.nextDouble() < missChance) {
+//            System.out.println(attacker.getName() + "'s attack missed!");
+//            return 0;
+//        }
+//
+//        int finalDamage = baseDamage;
+//        if (criticalHit) {
+//            finalDamage *= 2;
+//            System.out.println("Critical Hit! " + attacker.getName() + " deals extra damage.");
+//        }
+//
+//        return finalDamage;
+//    }
 
     private void applyStatusEffect() {
         Random rand = new Random();

@@ -1,10 +1,12 @@
 package Laboratory_1.domain.models.character;
 
+import Laboratory_1.domain.models.weapon.Axe;
 import Laboratory_1.domain.models.weapon.Bow;
 import Laboratory_1.domain.prototype.CloneableCharacter;
 import Laboratory_1.domain.models.weapon.Weapon;
 import Laboratory_2.observer.GameEvent;
 import Laboratory_2.observer.Observer;
+import Laboratory_3.adapter.AxeAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Map;
 public class Archer implements Character, CloneableCharacter, Observer {
     private Weapon weapon;
     private String name;
-    private int attackPower = 10;
+    private int attackPower = 20;
     private int dodgeSkill = 8;
     private int health = 90;
     private Map<String, Boolean> statusEffects = new HashMap<>();
@@ -23,15 +25,15 @@ public class Archer implements Character, CloneableCharacter, Observer {
     }
 
     @Override
-    public void attackWithWeapon() {
+    public int attackWithWeapon() {
         if (weapon == null) {
             System.out.println(this.name + " has no weapon equipped!");
-            return;
+            return 0;
         }
 
         if (weapon.getDurability() <= 0) {
             System.out.println(this.name + "'s " + weapon.getName() + " is too damaged to use. Repair it first.");
-            return;
+            return 0;
         }
 
         double critChance = 0.2;
@@ -52,6 +54,8 @@ public class Archer implements Character, CloneableCharacter, Observer {
         }
 
         weapon.reduceDurability(5);
+
+        return damage;
     }
 
     @Override
@@ -68,8 +72,8 @@ public class Archer implements Character, CloneableCharacter, Observer {
 
     @Override
     public void equipWeapon(Weapon weapon) {
-        if (!(weapon instanceof Bow)) {
-            System.out.println(this.name + " can only equip bows. " + weapon.getName() + " is incompatible.");
+        if (!((weapon instanceof Bow) || (weapon instanceof AxeAdapter))) {
+            System.out.println(this.name + " can only equip bows or special tools. " + weapon.getName() + " is incompatible.");
             return;
         }
 

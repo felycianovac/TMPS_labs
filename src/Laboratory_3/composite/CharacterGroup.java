@@ -9,9 +9,19 @@ import java.util.List;
 public class CharacterGroup implements Character {
     private final String groupName;
     private final List<Character> characters = new ArrayList<>();
+    private CharacterGroup targetGroup;
+
 
     public CharacterGroup(String groupName) {
         this.groupName = groupName;
+    }
+
+    public void setTargetGroup(CharacterGroup targetGroup) {
+        this.targetGroup = targetGroup;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
     }
 
     public void addCharacter(Character character) {
@@ -31,12 +41,39 @@ public class CharacterGroup implements Character {
     }
 
     @Override
-    public void attackWithWeapon() {
-        System.out.println("Group: " + groupName + " attacks together!");
-        for (Character character : characters) {
-            character.attackWithWeapon();
+    public int attackWithWeapon() {
+        if (characters.isEmpty()) {
+            System.out.println("Group: " + groupName + " has no members to attack!");
+            return 0;
         }
+
+        System.out.println("Group: " + groupName + " launches a coordinated attack!");
+
+        if (targetGroup == null || targetGroup.getCharacters().isEmpty()) {
+            System.out.println("No target group available. Attacking unspecified targets.");
+            for (Character attacker : characters) {
+                int damageDealt = attacker.attackWithWeapon();
+                System.out.println(attacker.getName() + " dealt " + damageDealt + " damage.");
+            }
+            return 0;
+        }
+
+        List<Character> targets = targetGroup.getCharacters();
+        int targetIndex = 0;
+
+        for (Character attacker : characters) {
+            Character target = targets.get(targetIndex);
+
+            int damageDealt = attacker.attackWithWeapon();
+            System.out.println(attacker.getName() + " attacks " + target.getName() + " for " + damageDealt + " damage!");
+            target.takeDamage(damageDealt);
+
+            targetIndex = (targetIndex + 1) % targets.size();
+        }
+
+        return 0;
     }
+
 
     @Override
     public void defend() {

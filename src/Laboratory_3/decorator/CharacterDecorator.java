@@ -3,8 +3,9 @@ package Laboratory_3.decorator;
 
 import Laboratory_1.domain.models.character.Character;
 import Laboratory_1.domain.models.weapon.Weapon;
+import Laboratory_1.domain.prototype.CloneableCharacter;
 
-public abstract class CharacterDecorator implements Character {
+public abstract class CharacterDecorator implements Character, CloneableCharacter {
     protected Character character;
 
     public CharacterDecorator(Character character) {
@@ -17,8 +18,9 @@ public abstract class CharacterDecorator implements Character {
     }
 
     @Override
-    public void attackWithWeapon() {
+    public int attackWithWeapon() {
         character.attackWithWeapon();
+        return 0;
     }
 
     @Override
@@ -64,6 +66,16 @@ public abstract class CharacterDecorator implements Character {
     @Override
     public void restoreHealth(int amount) {
         character.restoreHealth(amount);
+    }
+
+    @Override
+    public CloneableCharacter clone() {
+        try {
+            return (CloneableCharacter) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

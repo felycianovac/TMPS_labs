@@ -3,7 +3,7 @@ package Laboratory_1.domain.models.weapon;
 import java.util.Random;
 
 public class Axe {
-    private int durability = 100;
+    private int durability = 50;
     private int staminaRequired = 15;
     private final Random random = new Random();
 

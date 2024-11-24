@@ -11,10 +11,11 @@ public class EnhancedAttackDecorator extends CharacterDecorator {
     }
 
     @Override
-    public void attackWithWeapon() {
+    public int attackWithWeapon() {
         System.out.println(character.getName() + " gains an attack boost of " + extraAttackPower + "!");
         super.attackWithWeapon();
         System.out.println("Enhanced attack performed with " + extraAttackPower + " additional damage!");
+        return extraAttackPower;
     }
 
 }

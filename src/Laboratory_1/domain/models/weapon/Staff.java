@@ -1,7 +1,7 @@
 package Laboratory_1.domain.models.weapon;
 
 public class Staff implements Weapon{
-    private int durability = 100;
+    private int durability = 35;
 
     @Override
     public void attack() {

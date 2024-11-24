@@ -4,7 +4,7 @@ import Laboratory_1.domain.models.weapon.Weapon;
 
 public interface Character {
     void introduce();
-    void attackWithWeapon();
+    int attackWithWeapon();
     void defend();
     void equipWeapon(Weapon weapon);
 

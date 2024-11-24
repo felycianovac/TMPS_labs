@@ -1,10 +1,12 @@
 package Laboratory_1.domain.models.character;
 
+import Laboratory_1.domain.models.weapon.Axe;
 import Laboratory_1.domain.models.weapon.Staff;
 import Laboratory_1.domain.prototype.CloneableCharacter;
 import Laboratory_1.domain.models.weapon.Weapon;
 import Laboratory_2.observer.GameEvent;
 import Laboratory_2.observer.Observer;
+import Laboratory_3.adapter.AxeAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +25,15 @@ public class Mage implements Character, CloneableCharacter, Observer {
     }
 
     @Override
-    public void attackWithWeapon() {
+    public int attackWithWeapon() {
         if (weapon == null) {
             System.out.println(this.name + " has no weapon equipped!");
-            return;
+            return 0;
         }
 
         if (weapon.getDurability() <= 0) {
             System.out.println(this.name + "'s " + weapon.getName() + " is too damaged to use. Repair it first.");
-            return;
+            return 0;
         }
 
         double critChance = 0.25;
@@ -51,7 +53,8 @@ public class Mage implements Character, CloneableCharacter, Observer {
         }
 
         weapon.reduceDurability(5);
-//        System.out.println(weapon.getName() + " durability reduced to " + weapon.getDurability() + ".");
+
+        return damage;
     }
 
     @Override
@@ -68,8 +71,8 @@ public class Mage implements Character, CloneableCharacter, Observer {
 
     @Override
     public void equipWeapon(Weapon weapon) {
-        if (!(weapon instanceof Staff)) {
-            System.out.println(this.name + " can only equip magical staffs. " + weapon.getName() + " is incompatible.");
+        if (!((weapon instanceof Staff) || (weapon instanceof AxeAdapter))) {
+            System.out.println(this.name + " can only equip magical staffs or special tools. " + weapon.getName() + " is incompatible.");
             return;
         }
 

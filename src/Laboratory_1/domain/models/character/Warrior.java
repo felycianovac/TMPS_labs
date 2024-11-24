@@ -1,10 +1,12 @@
 package Laboratory_1.domain.models.character;
 
+import Laboratory_1.domain.models.weapon.Axe;
 import Laboratory_1.domain.models.weapon.Sword;
 import Laboratory_1.domain.prototype.CloneableCharacter;
 import Laboratory_1.domain.models.weapon.Weapon;
 import Laboratory_2.observer.GameEvent;
 import Laboratory_2.observer.Observer;
+import Laboratory_3.adapter.AxeAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +25,15 @@ public class Warrior implements Character, CloneableCharacter, Observer {
     }
 
     @Override
-    public void attackWithWeapon() {
+    public int attackWithWeapon() {
         if (weapon == null) {
             System.out.println(this.name + " has no weapon equipped!");
-            return;
+            return 0;
         }
 
         if (weapon.getDurability() <= 0) {
             System.out.println(this.name + "'s " + weapon.getName() + " is too damaged to use. Repair it first.");
-            return;
+            return 0;
         }
 
         double critChance = 0.15;
@@ -52,7 +54,9 @@ public class Warrior implements Character, CloneableCharacter, Observer {
         }
 
         weapon.reduceDurability(8);
+        return damage;
     }
+
 
     @Override
     public void defend() {
@@ -71,8 +75,8 @@ public class Warrior implements Character, CloneableCharacter, Observer {
 
     @Override
     public void equipWeapon(Weapon weapon) {
-        if (!(weapon instanceof Sword)) {
-            System.out.println(this.name + " can only equip swords. " + weapon.getName() + " is incompatible.");
+        if (!((weapon instanceof Sword) || (weapon instanceof AxeAdapter))) {
+            System.out.println(this.name + " can only equip swords or special tools. " + weapon.getName() + " is incompatible.");
             return;
         }
 

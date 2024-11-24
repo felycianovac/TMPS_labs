@@ -212,8 +212,8 @@ public class GameMenu {
         switch (actionChoice) {
             case 1 -> {
                 System.out.println("Choose a target for the attack:");
-                Character target = selectTarget(character); // Pass the attacker to prevent self-attack
-                if (target == null) return; // Exit if no valid target is selected
+                Character target = selectTarget(character);
+                if (target == null) return;
                 command = new AttackCommand(character, target);
             }
             case 2 -> command = new DefendCommand(character);
@@ -362,7 +362,7 @@ public class GameMenu {
 
         if (specialTool != null) {
             character.equipWeapon(specialTool);
-            System.out.println(character.getName() + " has equipped a " + specialTool.getName() + "!");
+//            System.out.println(character.getName() + " has equipped a " + specialTool.getName() + "!");
         }
     }
 
@@ -424,15 +424,34 @@ public class GameMenu {
             System.out.println((i + 1) + ". " + characterGroups.get(i).getName());
         }
 
-        int choice = scanner.nextInt();
+        System.out.print("Choose the acting group: ");
+        int actingGroupIndex = scanner.nextInt();
         scanner.nextLine();
 
-        if (choice < 1 || choice > characterGroups.size()) {
+        if (actingGroupIndex < 1 || actingGroupIndex > characterGroups.size()) {
             System.out.println("Invalid group choice.");
             return;
         }
 
-        CharacterGroup group = characterGroups.get(choice - 1);
+        CharacterGroup actingGroup = characterGroups.get(actingGroupIndex - 1);
+
+        System.out.println("Select a target group for the operation:");
+        for (int i = 0; i < characterGroups.size(); i++) {
+            if (i != (actingGroupIndex - 1)) {
+                System.out.println((i + 1) + ". " + characterGroups.get(i).getName());
+            }
+        }
+
+        System.out.print("Choose the target group: ");
+        int targetGroupIndex = scanner.nextInt();
+        scanner.nextLine();
+
+        if (targetGroupIndex < 1 || targetGroupIndex > characterGroups.size() || targetGroupIndex == actingGroupIndex) {
+            System.out.println("Invalid target group choice.");
+            return;
+        }
+
+        CharacterGroup targetGroup = characterGroups.get(targetGroupIndex - 1);
 
         System.out.println("Choose an operation:");
         System.out.println("1. Group Attack");
@@ -441,10 +460,23 @@ public class GameMenu {
         scanner.nextLine();
 
         switch (operation) {
-            case 1 -> group.attackWithWeapon();
-            case 2 -> group.defend();
+            case 1 -> {
+                System.out.println("Group " + actingGroup.getName() + " is attacking group " + targetGroup.getName() + "!");
+                for (Character attacker : actingGroup.getCharacters()) {
+                    for (Character defender : targetGroup.getCharacters()) {
+                        System.out.println(attacker.getName() + " attacks " + defender.getName() + "!");
+                        attacker.attackWithWeapon();
+                        defender.takeDamage(10);
+                    }
+                }
+            }
+            case 2 -> {
+                System.out.println("Group " + actingGroup.getName() + " is defending!");
+                actingGroup.defend();
+            }
             default -> System.out.println("Invalid operation.");
         }
     }
+
 
 }
