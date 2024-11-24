@@ -14,7 +14,7 @@ import java.util.Map;
 public class Mage implements Character, CloneableCharacter, Observer {
     private Weapon weapon;
     private String name;
-    private int magicPower = 20;
+    private int magicPower = 35;
     private int barrierStrength = 6;
     private int health = 100;
     private Map<String, Boolean> statusEffects = new HashMap<>();
@@ -37,7 +37,7 @@ public class Mage implements Character, CloneableCharacter, Observer {
         }
 
         double critChance = 0.25;
-        int baseDamage = 8;
+        int baseDamage = magicPower;
         int damage = baseDamage;
 
         if (Math.random() < critChance) {

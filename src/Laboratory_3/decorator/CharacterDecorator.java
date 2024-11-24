@@ -19,8 +19,7 @@ public abstract class CharacterDecorator implements Character, CloneableCharacte
 
     @Override
     public int attackWithWeapon() {
-        character.attackWithWeapon();
-        return 0;
+        return character.attackWithWeapon();
     }
 
     @Override

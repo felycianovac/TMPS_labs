@@ -47,18 +47,22 @@ public class CharacterGroup implements Character {
             return 0;
         }
 
-        System.out.println("Group: " + groupName + " launches a coordinated attack!");
-
         if (targetGroup == null || targetGroup.getCharacters().isEmpty()) {
             System.out.println("No target group available. Attacking unspecified targets.");
+            int totalDamageDealt = 0;
+
             for (Character attacker : characters) {
                 int damageDealt = attacker.attackWithWeapon();
                 System.out.println(attacker.getName() + " dealt " + damageDealt + " damage.");
+                totalDamageDealt += damageDealt;
             }
-            return 0;
+
+            return totalDamageDealt;
         }
 
+        System.out.println("Group: " + groupName + " launches a coordinated attack!");
         List<Character> targets = targetGroup.getCharacters();
+        int totalDamageDealt = 0;
         int targetIndex = 0;
 
         for (Character attacker : characters) {
@@ -68,11 +72,16 @@ public class CharacterGroup implements Character {
             System.out.println(attacker.getName() + " attacks " + target.getName() + " for " + damageDealt + " damage!");
             target.takeDamage(damageDealt);
 
+            totalDamageDealt += damageDealt;
+
             targetIndex = (targetIndex + 1) % targets.size();
         }
 
-        return 0;
+        System.out.println("Group: " + groupName + " dealt a total of " + totalDamageDealt + " damage!");
+        return totalDamageDealt;
     }
+
+
 
 
     @Override

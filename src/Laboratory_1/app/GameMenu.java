@@ -461,14 +461,9 @@ public class GameMenu {
 
         switch (operation) {
             case 1 -> {
-                System.out.println("Group " + actingGroup.getName() + " is attacking group " + targetGroup.getName() + "!");
-                for (Character attacker : actingGroup.getCharacters()) {
-                    for (Character defender : targetGroup.getCharacters()) {
-                        System.out.println(attacker.getName() + " attacks " + defender.getName() + "!");
-                        attacker.attackWithWeapon();
-                        defender.takeDamage(10);
-                    }
-                }
+                actingGroup.setTargetGroup(targetGroup);
+                actingGroup.attackWithWeapon();
+
             }
             case 2 -> {
                 System.out.println("Group " + actingGroup.getName() + " is defending!");

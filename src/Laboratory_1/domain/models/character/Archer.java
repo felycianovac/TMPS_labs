@@ -14,9 +14,9 @@ import java.util.Map;
 public class Archer implements Character, CloneableCharacter, Observer {
     private Weapon weapon;
     private String name;
-    private int attackPower = 20;
+    private int attackPower = 50;
     private int dodgeSkill = 8;
-    private int health = 90;
+    private int health = 100;
     private Map<String, Boolean> statusEffects = new HashMap<>();
 
     @Override

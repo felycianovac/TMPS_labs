@@ -14,9 +14,9 @@ import java.util.Map;
 public class Warrior implements Character, CloneableCharacter, Observer {
     private Weapon weapon;
     private String name;
-    private int attackPower = 15;
+    private int attackPower = 40;
     private int shieldStrength = 10;
-    private int health = 120;
+    private int health = 100;
     private Map<String, Boolean> statusEffects = new HashMap<>();
 
     @Override
